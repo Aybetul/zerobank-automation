@@ -1,11 +1,14 @@
 package com.zerobank.pages;
 
 import com.zerobank.utilities.BrowserUtilities;
+import com.zerobank.utilities.ConfigurationReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.lang.module.Configuration;
 
 public class LoginPage extends PageBase {
 
@@ -59,9 +62,21 @@ public String getErrorMess(){
         return str;
     }
 
+   public void login() {
 
+       try {
+           clickOnthesigninBtn();
+            wait.until(ExpectedConditions.visibilityOf(username));
+           username.sendKeys(ConfigurationReader.getProperty("username"));
+           password.sendKeys(ConfigurationReader.getProperty("password"), Keys.ENTER);
+       } catch (Exception e) {
+           clickOnLogout();
+           clickOnthesigninBtn();
+           wait.until(ExpectedConditions.visibilityOf(username));
+           username.sendKeys(ConfigurationReader.getProperty("username"));
+           password.sendKeys(ConfigurationReader.getProperty("password"), Keys.ENTER);
+       }
 
-
-
+   }
 
 }

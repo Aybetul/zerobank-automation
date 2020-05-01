@@ -5,8 +5,7 @@ Feature:Account Activity
 
   Background:
     Given user is on the landing page
-    And user clicks on the Singin button
-    And user logs in with "username" and "password"
+    When user  logs in with valid credentials
     Then user navigates to "Account Activity"
 
   Scenario: User verify the title
@@ -24,7 +23,7 @@ Feature:Account Activity
       | Description |
       | Deposit     |
       | Withdrawal  |
-    Then user logs out
+
 
   @date_range
   Scenario: Search date range
@@ -33,7 +32,7 @@ Feature:Account Activity
     When click on find
     And result table should display only date range "2012-09-01" and "2012-09-06"
     And verify result sorted by most recent date
-    Then user logs out
+
 
   @date_range
   Scenario: Search date range2
@@ -41,7 +40,7 @@ Feature:Account Activity
     Then user enter the date range "2012-09-02" and "2012-09-06"
     When click on find
     Then verify the the date list not contains "2012-09-01"
-    Then user logs out
+
 
   @Search_description
   Scenario Outline:Search description
@@ -49,22 +48,35 @@ Feature:Account Activity
     Then user enters description "<description>"
     When click on find
     Then verify result table should show only containing "<result>"
-    Then user logs out
+
     Examples:
       | description | result |
       | OFFICE      | OFFICE |
       | ONLINE      | ONLINE |
 
-  @Search_description
+  @Search_description2
   Scenario Outline: Search description case insensitive
     When user access navigates to "Find Transactions"
     Then user enters description "<description>"
     When click on find
     Then  verify system display "<message>"
-    Then user logs out
+
     Examples:
       | description | message     |
       | online      | No results.  |
       | Office      | No results. |
 
-
+@Type
+Scenario: Type
+  When user access navigates to "Find Transactions"
+  When click on find
+  Then verify result table should show at lest one result under Deposit
+  Then verify result table should show at lest one result under Withdrawal
+  When user select type "Deposit"
+  When click on find
+  Then verify result table should show at lest one result under Deposit
+  Then verify result table should show no result under Withdrawal
+  When user select type "Withdrawal"
+  When click on find
+  Then verify result table should show at lest one result under Withdrawal
+  Then verify result table should show no result under Deposit

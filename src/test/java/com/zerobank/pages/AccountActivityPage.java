@@ -1,6 +1,7 @@
 package com.zerobank.pages;
 
 import com.zerobank.utilities.BrowserUtilities;
+import io.cucumber.java.eo.Se;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -39,15 +40,45 @@ public class AccountActivityPage  extends PageBase{
     @FindBy(xpath="//*[@id='filtered_transactions_for_account']/table/tbody/tr/td[2]")
     private List<WebElement> DescriptionLst;
 
+    @FindBy(xpath="//*[@id='filtered_transactions_for_account']/table/tbody/tr/td[4]")
+    private List<WebElement> withdrawalLst;
+
+    @FindBy(xpath="//*[@id='filtered_transactions_for_account']/table/tbody/tr/td[3]")
+    private List<WebElement> DepositLst;
+
     @FindBy (xpath  ="//div[contains(text(),'No results.')]")
     private  WebElement NoResult;
 
-    public String getNoresultText(){
+    @FindBy(xpath = "//select[@id='aa_type']")
+     private  WebElement typeInput;
+
+    @FindBy(xpath = "(//th[text()='Deposit'])[2]")
+    private  WebElement deposit;
+
+     public  void selectType(String str){
+        wait.until(ExpectedConditions.visibilityOf(typeInput));
+        Select select = new Select(typeInput);
+        select.selectByVisibleText(str);
+    }
+
+      public List<String > getDepositList(){
+        BrowserUtilities.waitForPageToLoad(10);
+        wait.until(ExpectedConditions.visibilityOf(deposit));
+        return  BrowserUtilities.TextFromWebElement(DepositLst);
+}
+
+      public List<String > getWithdrawalList(){
+        wait.until(ExpectedConditions.visibilityOf(deposit));
+        BrowserUtilities.waitForPageToLoad(10);
+        return  BrowserUtilities.TextFromWebElement(withdrawalLst);
+    }
+
+      public String getNoresultText(){
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'No results.')]")));
         return  NoResult.getText();
     }
 
-    public void setDescriptionInput(String des){
+       public void setDescriptionInput(String des){
         wait.until(ExpectedConditions.visibilityOf(DescriptionInput)).sendKeys(des);
     }
 
@@ -113,12 +144,7 @@ for(int i=0; i<listInt.size()-1; i++){
         System.out.println("clicked on find button");
     }
 
-       public void NavigateToTab(String tab){
-        BrowserUtilities.waitForPageToLoad(10);
-        driver.findElement(By.xpath("//a[text()='"+tab+"']")).click();
-    }
-
-        public  List<String> getTableHeaders() {
+       public  List<String> getTableHeaders() {
     return BrowserUtilities.TextFromWebElement(tableHeaders);
 }
 
@@ -136,7 +162,7 @@ for(int i=0; i<listInt.size()-1; i++){
         return  BrowserUtilities.TextFromWebElement(select.getOptions()) ;
     }
 
-         public void clickOnTheBtn(){
+        public void clickOnTheBtn(){
     accountOption.click();
 }
 

@@ -4,8 +4,7 @@ Feature:Account Summary
 
   Background:
     Given user is on the landing page
-    And user clicks on the Singin button
-    And user logs in with "username" and "password"
+    When user  logs in with valid credentials
 
   Scenario: user on the Account summary page and verifies following options
     Then user verify following account types
@@ -13,25 +12,24 @@ Feature:Account Summary
       | Investment Accounts |
       | Credit Accounts     |
       | Loan Accounts       |
-    Then user logs out
+
 
   Scenario: user verifies the Credit Accounts Headers
     Then user should verify following options
       | Account     |
       | Credit Card |
       | Balance     |
-    Then user logs out
+
 
   Scenario: User verify the title
     Then User should verify the title is "Zero - Account Summary"
-    Then user logs out
 
   @redirect
   Scenario Outline: saving account redirect
     When user clicks on the "<linkToClick>"
     Then user should verify the page is "<Tab>"
     And user verify default option should be "<linkToVerify>"
-    Then user logs out
+
     Examples:Credentials
       | linkToClick | Tab              | linkToVerify |
       | Savings     | Account Activity | Savings      |

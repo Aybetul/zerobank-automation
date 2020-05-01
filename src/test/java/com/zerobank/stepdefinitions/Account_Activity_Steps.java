@@ -91,4 +91,28 @@ AccountActivityPage page= new AccountActivityPage();
    Assert.assertEquals(string,actual);
     }
 
+    @Then("verify result table should show at lest one result under Deposit")
+    public void verify_result_table_should_show_at_lest_one_result_under_Deposit() {
+       Assert.assertTrue("Verify deposit list result ",page.getDepositList().size()>=1);
+    }
+
+    @Then("verify result table should show at lest one result under Withdrawal")
+    public void verify_result_table_should_show_at_lest_one_result_under_Withdrawal() {
+        Assert.assertTrue(page.getWithdrawalList().size()>=1);
+    }
+
+    @When("user select type {string}")
+    public void user_select_type(String string) {
+       page.selectType(string);
+    }
+
+    @Then("verify result table should show no result under Withdrawal")
+    public void verify_result_table_should_show_no_result_under_Withdrawal() {
+        Assert.assertTrue(page.getWithdrawalList().size()==0);
+    }
+
+    @Then("verify result table should show no result under Deposit")
+    public void verify_result_table_should_show_no_result_under_Deposit() {
+        Assert.assertTrue(page.getDepositList().size()==0);
+    }
 }

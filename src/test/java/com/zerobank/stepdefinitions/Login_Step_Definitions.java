@@ -50,7 +50,10 @@ LoginPage loginPage = new LoginPage();
         System.out.println("verify error message");
     }
 
-
+    @When("user  logs in with valid credentials")
+    public void user_logs_in_with_valid_credentials() {
+       loginPage.login();
+    }
 
 
 

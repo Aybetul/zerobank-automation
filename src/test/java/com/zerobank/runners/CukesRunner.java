@@ -10,10 +10,10 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         glue="com/zerobank/stepdefinitions",
         features = "src/test/resources/features",
-      //  dryRun=true,
-      dryRun=false,
+       // dryRun=true,
+     dryRun=false,
         strict =true,
-        tags=" @Search_description",
+        tags="   @Search_description2",
         plugin= {"html:target/default-report",
                 "json:target/cucumber.json",
                 "rerun:target/rerun.txt"
