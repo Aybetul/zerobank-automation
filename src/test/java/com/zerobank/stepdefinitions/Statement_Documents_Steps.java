@@ -21,7 +21,7 @@ Statement_DocumentsPage page=new Statement_DocumentsPage();
 
     @Then("verify {string} statements should be displayed for that {string}")
     public void verify_statements_should_be_displayed_for_that(String string, String string2) {
-        List<WebElement> actual=page.getDataList(string2);
+        List<String> actual=page.getDataList(string2);
         String a=Integer.toString(actual.size());
         Assert.assertEquals(string,a);
         //note: test case 2011 is failing expected 1 actual 2;

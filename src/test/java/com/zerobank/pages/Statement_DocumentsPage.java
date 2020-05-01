@@ -16,11 +16,11 @@ public class Statement_DocumentsPage extends  PageBase {
 
 
 
-public List<WebElement> getDataList(String year){
+public List<String > getDataList(String year){
     BrowserUtilities.wait(10);
     List<WebElement> dataList= driver.findElements(By.xpath("//div[@id='os_"+year+"']/table/tbody/tr/td[1]/a"));
-
-return dataList;
+List<String> list=BrowserUtilities.TextFromWebElement(dataList);
+return list;
 }
 
     public void selectYear(String year){
