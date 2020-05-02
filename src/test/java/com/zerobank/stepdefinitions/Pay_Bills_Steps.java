@@ -19,15 +19,32 @@ PayBillsPage page= new PayBillsPage();
         page.setDate(data.get("date"));
     }
 
+   @Then("user enters {string} and {string}")
+    public void user_enters_and(String string, String string2) {
+       page.setAmount(string);
+       page.setDate(string2);
+    }
 
+
+
+    // this is for valid and invalid date and amount
     @Then("user should verify the {string} message is displayed")
     public void user_should_verify_the_message_is_displayed(String string) {
      String actual= page.getMessage();
         Assert.assertEquals(string,actual);
 
-        //Expected :Please fill out this field message!
+        //Expected :There is not error message for invalid data
         //   Actual   :The payment was successfully submitted.
     }
+
+// this is for no data date and amount
+    @Then("user should verify the {string} message is displayed for  not entering data")
+    public void user_should_verify_the_message_is_displayed_for_not_entering_data(String string) {
+        String actual= page.getAlertMessageForBox();
+        Assert.assertEquals(string,actual);
+    }
+
+
 
     @Then("user click on the pay button")
     public void user_click_on_the_pay_button() {

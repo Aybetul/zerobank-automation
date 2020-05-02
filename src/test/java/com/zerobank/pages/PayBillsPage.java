@@ -65,7 +65,11 @@ public class PayBillsPage extends  PageBase {
      return alertmess;
 
     }
-
+public String getAlertMessageForBox(){
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("sp_amount")));
+    String message = driver.findElement(By.id("sp_amount")).getAttribute("validationMessage");
+    return  message;
+}
 
     public    List<String>  getCurrencyObtions(){
         BrowserUtilities.waitForPageToLoad(10);

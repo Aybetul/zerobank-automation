@@ -14,16 +14,29 @@ Feature: Pay Bills
       | date   | 2020-04-08 |
     Then user click on the pay button
     And user should verify the "The payment was successfully submitted." message is displayed
-    Then user logs out
 
 
+  @invalidDate
+  Scenario Outline: user should be able receive error message when doesn't enter  data
+    And user enters "<amount>" and "<date>"
+    Then user click on the pay button
+    And user should verify the "Please fill out this field." message is displayed for  not entering data
+
+    Examples:
+      | amount | date       |
+      | 100    |            |
+      |        | 2020-05-18 |
+      |        |            |
+
+
+  @invalidDate2
   Scenario: user should be able receive error message payment when use invalid data
     When user enter date and amount
       | amount | 100$        |
       | date   | 2020-may-08 |
     Then user click on the pay button
-    And user should verify the "Please fill out this field message!" message is displayed
-    Then user logs out
+    And user should verify the "Error message in this area!!!" message is displayed
+
 
   @AddNew_Payee
   Scenario: Add new Payee
@@ -52,7 +65,7 @@ Feature: Pay Bills
       | Norway (krone)        |
       | New Zealand (dollar)  |
       | Singapore (dollar)    |
-    Then user logs out
+
 
   @error-message
   Scenario Outline: Purchase Foreign Currency error message
@@ -62,7 +75,7 @@ Feature: Pay Bills
     Then user select radioButton
     And user click on Purchase
     Then user verifies error message is displayed "Please, ensure that you have filled all the required fields with valid values."
-    Then user logs out
+
     Examples:
       | currency        | amount |
       | Canada (dollar) |        |
